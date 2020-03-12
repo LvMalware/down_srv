@@ -28,7 +28,7 @@ sub server_loop
         Proto     => "tcp"
     ) || die "Can't create the server";
 
-    #only a client at time
+    #only one client at time
     while (1)
     {
         my $cli_sock = $server->accept();
@@ -44,7 +44,7 @@ sub server_loop
         $cli_sock->send("Enter the links to download, one per line.\n> ");
         while (my $link = <$cli_sock>)
         {
-            #Receive and enqueue the links
+            #Receive and enqueue the next link
             chomp($link);
             $links->enqueue($link);
             $cli_sock->send("> ");
